@@ -19,7 +19,6 @@ function  Remove-UnwantedUpdates {
             ValueFromPipeline=$true
         )]
         $AllUpdates
-
     )
 
     begin {
@@ -31,42 +30,39 @@ function  Remove-UnwantedUpdates {
     }
 
     end {
+        # filter Updates by Regex
         $IDRegexFilteredUpdates = $collectedUpdates | Where-Object {
             $UpdateID = $_.Id
             -not ($UnwantedUpdatesByIDRegex | Where-Object { $UpdateID -match $_ })
         }
 
-            $IDFilteredUpdates = $IDRegexFilteredUpdates | Where-Object {
+        # filter Updates by ID
+        $IDFilteredUpdates = $IDRegexFilteredUpdates | Where-Object {
             $_.Id -notin $UnwantedUpdatesByID
         }
-
         
+        # filter for Device specific exclusions
         if ($DeviceModel -and $UnwantedUpdatesByDevice.ContainsKey($DeviceModel)) {
             Write-Host "Device is $DeviceModel, some Updates are not applied"
             $deviceFilterScript = [ScriptBlock]::Create($UnwantedUpdatesByDevice[$DeviceModel])
             $FinalFilteredUpdates = $IDFilteredUpdates | Where-Object {
             -not ($deviceFilterScript.Invoke($_))
             }
-
         }
         else {
             Write-Host "Device is $DeviceModel, all Updates are applied"
-             $FinalFilteredUpdates = $IDFilteredUpdates
+            $FinalFilteredUpdates = $IDFilteredUpdates
         }
 
-
-        
+        # message for filetered Updates       
         $FinalIds = $FinalFilteredUpdates.Id
         $UnwantedUpdates = $collectedUpdates | Where-Object { $_.Id -notin $FinalIds }
 
         if ($UnwantedUpdates.Count -gt 0) {
-            Write-Host "Some updates are not applied"
             $UnwantedUpdates
         }
 
         Write-Host "see $updateDefinitionsUrl for excluded updates"
-
-
     }
 
 }
@@ -89,7 +85,7 @@ Write-Host (Get-Date -Format $DateTimeFormat)-" script started"
 ###########################################################################
 
 
-$updateDefinitionsUrl = "https://raw.githubusercontent.com/danielzoller20/UpdateDrivers/576f6c241bccfa0a69c04d2badc7520df704944f/UnwantedUpdates.ps1"
+$updateDefinitionsUrl = "https://raw.githubusercontent.com/danielzoller20/UpdateDrivers/refs/heads/main/UnwantedUpdates.ps1"
 
 Invoke-Expression (Invoke-RestMethod -Uri $updateDefinitionsUrl) -Verbose
 
@@ -254,6 +250,8 @@ foreach ($FolderInC in $AllFoldersInC) {
 ###########################################################################
 # update drivers
 ###########################################################################
+
 & $UpdatePrompt
 
+Write-Host (Get-Date -Format $DateTimeFormat)-" script terminated"
 Stop-Transcript
