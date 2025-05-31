@@ -7,7 +7,7 @@ $TestsSucessful = 0
 
 # first file to check for presence and for filesize
 $FilePathToTest = "C:\Program Files\UpdateDrivers\UpdateDrivers.ps1"
-$SpecifiedLenght = 6521
+$SpecifiedLenght = 9043
 if (Test-Path $FilePathToTest) {
     Write-Host "$FilePathToTest present" -ForegroundColor Green
     $TestsSucessful++
@@ -46,11 +46,11 @@ else {
 $NumberOfTests = 4
 if ($TestsSucessful -eq $NumberOfTests) {
     Write-Host "`r`nall $NumberOfTests tests passed" -ForegroundColor Green
+    Stop-Transcript
     exit(0)
 }
 else {
     Write-Host "`r`nnot all $NumberOfTests tests were passed" -ForegroundColor Red
+    Stop-Transcript
     exit(1)
 }
-
-Stop-Transcript
