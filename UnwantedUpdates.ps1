@@ -14,5 +14,5 @@ $UnwantedUpdatesByIDRegex = @(
 )
 
 $UnwantedUpdatesByDevice = @{
-    "82YS" = {$_.Category -eq "Networking Wireless LAN"}
+    "82YS" = {$_.Category -ne "Networking Wireless LAN"}
 }
