@@ -17,5 +17,5 @@ $UnwantedUpdatesByIDRegex = @(
 # device needs to be identified by (Get-ComputerInfo).Model
 # filter acts as Where-Object / possibilities vary by Update-Module (LSUClient / HPDrivers)
 $UnwantedUpdatesByDevice = @{
-    "82YS" = {$_.Category -ne "Networking Wireless LAN"}
+    "82YS" = {$_.Category -eq "Networking Wireless LAN"}
 }

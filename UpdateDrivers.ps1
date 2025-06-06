@@ -46,7 +46,7 @@ function  Remove-UnwantedUpdates {
             Write-Host "Device is $DeviceModel, some Updates are not applied"
             $deviceFilterScript = [ScriptBlock]::Create($UnwantedUpdatesByDevice[$DeviceModel])
             $FinalFilteredUpdates = $IDFilteredUpdates | Where-Object {
-            -not ($deviceFilterScript.Invoke($_))
+            $deviceFilterScript
             }
         }
         else {
