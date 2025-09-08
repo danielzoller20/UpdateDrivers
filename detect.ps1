@@ -25,17 +25,19 @@ else {
 
 
 # second file to check for presence and for filesize
-$FilePathToTest = "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Treiber aktualisieren.lnk"
-$SpecifiedLenght = 1225
-if (Test-Path $FilePathToTest) {
-    Write-Host "$FilePathToTest present" -ForegroundColor Green
+$PathToTest = "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Treiber aktualisieren"
+$SpecifiedLenght = 3829
+if (Test-Path $PathToTest) {
+    Write-Host "$PathToTest present" -ForegroundColor Green
     $TestsSucessful++
 }
 else {
-    Write-Host "$FilePathToTest not present" -ForegroundColor Red
+    Write-Host "$PathToTest not present" -ForegroundColor Red
 }
-if ((Get-ItemProperty $FilePathToTest).Length -eq $SpecifiedLenght) {
-    Write-Host "$FilePathToTest filesize as specified" -ForegroundColor Green
+
+$FolderSize = (Get-ChildItem -Path $PathToTest | Measure-Object -Property Length -Sum).Sum
+if ($FolderSize -eq $SpecifiedLenght) {
+    Write-Host "$PathToTest filesize as specified" -ForegroundColor Green
     $TestsSucessful++
 }
 else {

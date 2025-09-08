@@ -52,12 +52,9 @@ Copy-Item -Path $UpdateScriptOldPath -Destination $UpdateScriptNewPath -Force
 # make entry in common start menu
 $StartmenuDir = "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\"
 try {
-    $UpdateLink = "Treiber aktualisieren.lnk"
-    $UpdateLinkPath = Join-Path -Path $PSScriptRoot -ChildPath $UpdateLink
-    Copy-Item -Path $UpdateLinkPath -Destination $StartmenuDir -Force
-    $ReinstallLink = "Treiber neu installieren.lnk"
-    $ReinstallLinkPath = Join-Path -Path $PSScriptRoot -ChildPath $ReinstallLink
-    Copy-Item -Path $ReinstallLinkPath -Destination $StartmenuDir -Force 
+    $UpdateLinks = "Treiber aktualisieren"
+    $UpdateLinksPath = Join-Path -Path $PSScriptRoot -ChildPath $UpdateLinks
+    Copy-Item -Path $UpdateLinksPath -Destination $StartmenuDir -Recurse -Force
 }
 catch {
     Write-Output "no shortcuts added to startmenu"
