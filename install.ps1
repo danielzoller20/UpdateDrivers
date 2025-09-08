@@ -54,10 +54,13 @@ $StartmenuDir = "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\"
 try {
     $UpdateLink = "Treiber aktualisieren.lnk"
     $UpdateLinkPath = Join-Path -Path $PSScriptRoot -ChildPath $UpdateLink
-    Copy-Item -Path $UpdateLinkPath -Destination $StartmenuDir -Force 
+    Copy-Item -Path $UpdateLinkPath -Destination $StartmenuDir -Force
+    $ReinstallLink = "Treiber neu installieren.lnk"
+    $ReinstallLinkPath = Join-Path -Path $PSScriptRoot -ChildPath $ReinstallLink
+    Copy-Item -Path $ReinstallLinkPath -Destination $StartmenuDir -Force 
 }
 catch {
-    Write-Output "no shortcut added to startmenu"
+    Write-Output "no shortcuts added to startmenu"
     exit(1618)
 }
 

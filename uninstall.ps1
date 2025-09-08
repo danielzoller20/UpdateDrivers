@@ -4,7 +4,8 @@ $ErrorActionPreference = 'Stop'
 
 $SchTaskName = "UpdateDrivers"
 $ProgramFolder = Join-Path $env:ProgramFiles -ChildPath "UpdateDrivers"
-$LinkInStartMenu = "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Treiber aktualisieren.lnk"
+$FirstLinkInStartMenu = "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Treiber aktualisieren.lnk"
+$SecondLinkInStartMenu = "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Treiber neu installieren.lnk"
 
 try {
     Unregister-ScheduledTask -TaskName $SchTaskName -Confirm:$false -ErrorAction Stop
@@ -25,11 +26,19 @@ catch {
 
 
 try {
-    Remove-Item -Path $LinkInStartMenu -Force
-    Write-Host "File $LinkInStartMenu was removed"
+    Remove-Item -Path $FirstLinkInStartMenu -Force
+    Write-Host "File $FirstLinkInStartMenu was removed"
 }
 catch {
-    Write-Host "Removing of File $LinkInStartMenu threw errors"
+    Write-Host "Removing of File $FirstLinkInStartMenu threw errors"
+}
+
+try {
+    Remove-Item -Path $SecondLinkInStartMenu -Force
+    Write-Host "File $SecondLinkInStartMenu was removed"
+}
+catch {
+    Write-Host "Removing of File $SecondLinkInStartMenu threw errors"
 }
 
 Stop-Transcript

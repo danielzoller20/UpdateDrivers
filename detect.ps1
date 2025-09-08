@@ -7,7 +7,7 @@ $TestsSucessful = 0
 
 # first file to check for presence and for filesize
 $FilePathToTest = "C:\Program Files\UpdateDrivers\UpdateDrivers.ps1"
-$SpecifiedLenght = 9025
+$SpecifiedLenght = 10294
 if (Test-Path $FilePathToTest) {
     Write-Host "$FilePathToTest present" -ForegroundColor Green
     $TestsSucessful++
