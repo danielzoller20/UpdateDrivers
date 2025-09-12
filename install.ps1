@@ -84,8 +84,3 @@ if ($EnableAutoUpdate) {
 
 
 Stop-Transcript
-
-###########################################################################################
-# Run update-script once
-###########################################################################################
-powershell.exe -WindowStyle Hidden -ExecutionPolicy Bypass -File "$UpdateScriptNewPath"
